@@ -1,0 +1,27 @@
+{
+  "name": "burgerlist",
+  "version": "1.0.0",
+  "description": "To eat or not to eat???",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dkahuna/BurgerList.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dkahuna/BurgerList/issues"
+  },
+  "homepage": "https://github.com/dkahuna/BurgerList#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "express-handlebars": "^3.1.0",
+    "mysql": "^2.17.1"
+  }
+}
