@@ -11,8 +11,7 @@ var app = express();
 // process.env.PORT lets the port be set by Heroku
 var PORT = process.env.PORT || 8080;
 
-// Importing the ./connection.js to make connection to MySQL
-module.import = ("./connection.js/")
+
 
 // Set Handlebars as the default templating engine.
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
