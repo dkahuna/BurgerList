@@ -1,5 +1,5 @@
 // Dependencies
-
+var bodyParser = require('body-parser');
 var mysql = require("mysql");
 var express = require("express");
 var exphbs = require("express-handlebars");
@@ -11,13 +11,17 @@ var app = express();
 // process.env.PORT lets the port be set by Heroku
 var PORT = process.env.PORT || 8080;
 
+app.use(express.static("public"));
 
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 // Set Handlebars as the default templating engine.
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 
-
+var routes = require("./controllers/burgers_controller.js");
+app.use(routes);
 
 // Start our server so that it can begin listening to client requests.
 app.listen(PORT, function() {
