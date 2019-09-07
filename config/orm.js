@@ -2,7 +2,7 @@
 // Importing the ./connection.js to make connection to MySQL
 var connection = require("../config/connection.js");
 
-function printQuestionMarks(num) {
+function createQmarks(num) {
     var arr = [];
 
     for (var i = 0; i < num; i++) {
@@ -10,17 +10,19 @@ function printQuestionMarks(num) {
     }
 
     return arr.toString();
-}
+};
 
-
-function objToSql(ob) {
-    // column1=value, column2=value2
+function translateSql(ob) {
     var arr = [];
-
     for (var key in ob) {
-        arr.push(key + "=" + ob[key]);
+        var value = ob[key];
+        if (Object.hasOwnProperty.call(ob, key)) {
+            if (typeof value === "string" && value.indexOf(" ") >= 0) {
+                value = "'" + value + "'" ;
+            }
+            arr.push(key + "=" + value);
+        }
     }
-
     return arr.toString();
 }
 
@@ -48,11 +50,11 @@ insertOne: function(table, cols, vals, cb) {
 
     console.log(dbQuery);
 
-    connection.query(queryString, vals, function(err, result) {
+    connection.query(dbQuery, vals, function(err, res) {
         if (err) {
             throw err;
         }
-        cb(result);
+        cb(res);
     });
     },
 
@@ -66,15 +68,28 @@ insertOne: function(table, cols, vals, cb) {
 
         console.log(dbQuery);
 
-        connection.query(queryString, vals, function(err, result) {
+        connection.query(dbQuery, function(err, res) {
             if (err) {
                 throw err;
             }
-            cb(result);
+            cb(res);
+        });
+    },
+
+    deleteOne: function(table, condition, cb) {
+        var dbQuery = "DELETE FROM " + table + " WHERE " + condition;
+
+        console.log(dbQuery);
+
+        connection.query(dbQuery,  function(err, res) {
+            if (err) {
+                throw err;
+            }
+            cb(res);
         });
     }
 
-}
+};
 
 
 module.exports = orm;
